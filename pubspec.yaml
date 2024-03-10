@@ -52,6 +52,10 @@ dependencies:
   # https://pub.dev/packages/flutter_lorem
   flutter_lorem: ^2.0.0
 
+  # https://pub:dev/packages/carousel_slide
+  # A carousel slider widget.
+  carousel_slider: ^4.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -78,6 +82,7 @@ flutter:
   assets:
    - assets/images/parallax/
    - assets/images/transition_location/
+   - assets/images/movie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
