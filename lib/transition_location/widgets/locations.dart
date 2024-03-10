@@ -16,32 +16,29 @@ class _LocationsState extends State<Locations> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => TransitionLocationPageVM(),
-      child: Consumer<TransitionLocationPageVM>(
-        builder: (context, value, child) => Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: value.locations.length,
-                itemBuilder: (context, i) => Location(
-                  location: value.locations[i],
-                ),
-                onPageChanged: (index) {
-                  setState(() {
-                    pageIndex = index;
-                  });
-                },
+    return Consumer<TransitionLocationPageVM>(
+      builder: (context, value, child) => Column(
+        children: [
+          Expanded(
+            child: PageView.builder(
+              controller: pageController,
+              itemCount: value.locations.length,
+              itemBuilder: (context, i) => Location(
+                location: value.locations[i],
               ),
+              onPageChanged: (index) {
+                setState(() {
+                  pageIndex = index;
+                });
+              },
             ),
-            Text(
-              '${pageIndex + 1}/${value.locations.length}',
-              style: const TextStyle(color: Colors.white70),
-            ),
-            const SizedBox(height: 12.0),
-          ],
-        ),
+          ),
+          Text(
+            '${pageIndex + 1}/${value.locations.length}',
+            style: const TextStyle(color: Colors.white70),
+          ),
+          const SizedBox(height: 12.0),
+        ],
       ),
     );
   }

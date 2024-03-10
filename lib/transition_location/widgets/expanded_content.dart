@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_example/transition_location/constants/hero_tag.dart';
 import 'package:flutter_ui_example/transition_location/models/location_model.dart';
+import 'package:flutter_ui_example/transition_location/pages/transition_location_page_viewmodel.dart';
+import 'package:flutter_ui_example/transition_location/widgets/material_hero.dart';
 import 'package:flutter_ui_example/transition_location/widgets/star_rating.dart';
+import 'package:provider/provider.dart';
 
 class ExpandedContent extends StatelessWidget {
   final LocationModel location;
@@ -22,7 +26,10 @@ class ExpandedContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(location.addressLine1),
+          MaterialHero(
+            tag: HeroTag.addressLine1(location),
+            child: Text(location.addressLine1),
+          ),
           const SizedBox(height: 8.0),
           _buildRating(),
           const SizedBox(height: 12.0),
@@ -36,11 +43,17 @@ class ExpandedContent extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          location.addressLine2,
-          style: const TextStyle(color: Colors.black45),
+        MaterialHero(
+          tag: HeroTag.addressLine2(location),
+          child: Text(
+            location.addressLine2,
+            style: const TextStyle(color: Colors.black45),
+          ),
         ),
-        StarRating(count: location.starRating),
+        MaterialHero(
+          tag: HeroTag.stars(location),
+          child: StarRating(count: location.starRating),
+        ),
       ],
     );
   }
@@ -52,10 +65,15 @@ class ExpandedContent extends StatelessWidget {
           .map(
             (e) => Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: CircleAvatar(
-                radius: 16.0,
-                backgroundColor: Colors.black12,
-                backgroundImage: AssetImage(e.urlImage),
+              child: Consumer<TransitionLocationPageVM>(
+                builder: (context, value, child) => MaterialHero(
+                  tag: HeroTag.avatar(e, value.locations.indexOf(location)),
+                  child: CircleAvatar(
+                    radius: 16.0,
+                    backgroundColor: Colors.black12,
+                    backgroundImage: AssetImage(e.urlImage),
+                  ),
+                ),
               ),
             ),
           )

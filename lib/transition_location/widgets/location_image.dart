@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_example/transition_location/constants/hero_tag.dart';
 import 'package:flutter_ui_example/transition_location/models/location_model.dart';
+import 'package:flutter_ui_example/transition_location/widgets/lat_long.dart';
+import 'package:flutter_ui_example/transition_location/widgets/material_hero.dart';
 
 class LocationImage extends StatefulWidget {
   final LocationModel location;
@@ -36,11 +39,16 @@ class _LocationImageState extends State<LocationImage> {
         ),
         child: Stack(
           children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(radius)),
-              child: Image.asset(
-                widget.location.urlImage,
-                fit: BoxFit.cover,
+            SizedBox.expand(
+              child: MaterialHero(
+                tag: HeroTag.image(widget.location.urlImage),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(radius)),
+                  child: Image.asset(
+                    widget.location.urlImage,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
             Container(
@@ -49,7 +57,7 @@ class _LocationImageState extends State<LocationImage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _buildTopText(),
-                  _buildLatLong(),
+                  LatLong(location: widget.location),
                 ],
               ),
             ),
@@ -67,29 +75,6 @@ class _LocationImageState extends State<LocationImage> {
         fontWeight: FontWeight.bold,
         fontSize: 20.0,
       ),
-    );
-  }
-
-  Widget _buildLatLong() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Text(
-          widget.location.latitude,
-          style: const TextStyle(color: Colors.white70),
-        ),
-        const Icon(
-          Icons.location_on,
-          color: Colors.white70,
-        ),
-        Text(
-          widget.location.longitude,
-          style: const TextStyle(
-            color: Colors.white70,
-          ),
-        ),
-      ],
     );
   }
 }
